@@ -61,7 +61,7 @@ export default function CheckerSection({ onCompare, error, setError }) {
               <button
                 id="check-button"
                 onClick={handleCompareClick}
-                className="bg-linear-to-r from-indigo-600 to-purple-600 text-white px-10 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-2">
+                className="bg-linear-to-r from-indigo-600 to-purple-600 text-white px-10 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-2 cursor-pointer">
                 <span>Analyze</span>
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
               </button>

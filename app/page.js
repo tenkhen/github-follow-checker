@@ -35,7 +35,7 @@ export default function GitHubComparePage() {
     setDiff1([]);
     setDiff2([]);
 
-    // If you want to load all info automatically without inputting username, change "username" to "account.login"
+    // If you want to load your account info automatically without inputting username, change "username" to "account.login"
     try {
       const [f1, f2] = await Promise.all([
         fetchAllPages(`https://api.github.com/users/${username}/followers`),

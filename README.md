@@ -67,8 +67,8 @@ The application is fully client-side and does not require a backend or database.
 ### 1. Clone the Repository
 
 ```
-git clone <repository-url>
-cd followsync
+git clone https://github.com/tenkhen/github-follow-checker.git
+cd github-follow-checker
 ```
 
 ### 2. Install Dependencies

@@ -4,6 +4,7 @@ import {
   faCircleCheck,
   faCircleDot,
   faWandSparkles,
+  faWarning,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -37,7 +38,7 @@ export default function HeroSection({ diff1, diff2, followers, following }) {
             <div className="flex items-center space-x-4">
               <button
                 onClick={handleScroll}
-                className="bg-linear-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-2">
+                className="bg-linear-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-2 cursor-pointer">
                 <span>Start Checking</span>
                 <FontAwesomeIcon icon={faArrowRight} />
               </button>
@@ -81,43 +82,25 @@ export default function HeroSection({ diff1, diff2, followers, following }) {
                     </div>
                   </div>
                 </div>
-                {/* Not following you back */}
-                {/* {diff1.length > 0 && (
-                  <div className="bg-amber-50 border-2 border-amber-200 p-4 rounded-xl flex items-center space-x-3">
+
+                {/* Not balanced */}
+                {(diff1.length > 0 || diff2.length > 0) && (
+                  <div className="bg-yellow-50 border-2 border-yellow-200 p-4 rounded-xl flex items-center space-x-3">
                     <FontAwesomeIcon
                       icon={faWarning}
-                      className="text-amber-600 text-2xl"
+                      className="text-yellow-600 text-2xl"
                     />
                     <div>
-                      <div className="font-semibold text-amber-900">
-                        Outreach Mode
+                      <div className="font-semibold text-yellow-900">
+                        Not Quite Balanced
                       </div>
-                      <div className="text-sm text-amber-700">
-                        You&apos;re following more people than follow you back.
-                        Some connections may not be mutual.
+                      <div className="text-sm text-yellow-700">
+                        There&apos;s a mismatch between your followers and
+                        followings. Consider reviewing.
                       </div>
                     </div>
                   </div>
-                )} */}
-
-                {/* You are not following */}
-                {/* {diff2.length > 0 && (
-                  <div className="bg-blue-50 border-2 border-blue-200 p-4 rounded-xl flex items-center space-x-3">
-                    <FontAwesomeIcon
-                      icon={faArrowUp}
-                      className="text-blue-600 text-2xl"
-                    />
-                    <div>
-                      <div className="font-semibold text-blue-900">
-                        Strong Presence
-                      </div>
-                      <div className="text-sm text-blue-700">
-                        More people follow you than you follow back. Your
-                        profile attracts attention.
-                      </div>
-                    </div>
-                  </div>
-                )} */}
+                )}
 
                 {/* Balanced */}
                 {diff1.length === 0 &&
@@ -141,7 +124,7 @@ export default function HeroSection({ diff1, diff2, followers, following }) {
                   )}
 
                 {/* No follower and following yet */}
-                {diff1.length === 0 &&
+                {/* {diff1.length === 0 &&
                   diff2.length === 0 &&
                   followers.length === 0 &&
                   following.length === 0 && (
@@ -160,7 +143,7 @@ export default function HeroSection({ diff1, diff2, followers, following }) {
                         </div>
                       </div>
                     </div>
-                  )}
+                  )} */}
               </div>
             </div>
             <div className="absolute -top-6 -right-6 w-32 h-32 bg-linear-to-br from-indigo-400 to-purple-400 rounded-full opacity-20 blur-3xl"></div>

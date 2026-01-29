@@ -1,7 +1,6 @@
 "use client";
 
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Logo } from "@/public/logo/logoSvg";
 import { useEffect, useState } from "react";
 
 export default function Header() {
@@ -33,9 +32,11 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-11 h-11 flex justify-center items-center bg-linear-to-br from-indigo-600 to-purple-600 rounded-xl">
-              <FontAwesomeIcon
-                icon={faGithub}
-                className="text-white text-2xl"
+              <Logo
+                width="30"
+                height="200"
+                strokeWidth="5px"
+                className="text-white"
               />
             </div>
             <div>

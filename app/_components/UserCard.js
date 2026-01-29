@@ -50,7 +50,7 @@ export default function UserCard({ user, type, onFollow, onUnfollow }) {
         {type === "follow" && (
           <button
             onClick={() => onFollow(user.login)}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold transition-colors flex items-center space-x-2">
+            className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold transition-colors flex items-center space-x-2 cursor-pointer">
             <FontAwesomeIcon icon={faUserPlus} />
             <span>Follow</span>
           </button>
@@ -59,7 +59,7 @@ export default function UserCard({ user, type, onFollow, onUnfollow }) {
         {type === "unfollow" && (
           <button
             onClick={() => onUnfollow(user.login)}
-            className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg font-semibold transition-colors flex items-center space-x-2">
+            className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg font-semibold transition-colors flex items-center space-x-2 cursor-pointer">
             <FontAwesomeIcon icon={faUserMinus} />
             <span>Unfollow</span>
           </button>
