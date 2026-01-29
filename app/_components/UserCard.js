@@ -2,6 +2,7 @@
 
 import { faUserMinus, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -18,6 +19,7 @@ export default function UserCard({ user, type, onFollow, onUnfollow }) {
         // console.error("Failed to fetch name", e);
       }
     };
+
     fetchName();
   }, [user.login]);
 
@@ -25,10 +27,12 @@ export default function UserCard({ user, type, onFollow, onUnfollow }) {
     <div>
       <div className="bg-slate-50 p-4 rounded-xl flex items-center justify-between hover:bg-slate-100 transition-colors">
         <div className="flex items-center space-x-4">
-          <img
+          <Image
             src={user.avatar_url}
             alt={user.login}
-            className="w-12 h-12 rounded-full"
+            width={48}
+            height={48}
+            className="rounded-full"
           />
           <div className="truncate">
             <div className="font-semibold text-slate-900 truncate">

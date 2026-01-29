@@ -9,6 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserCard from "./UserCard";
 import { followUser, unfollowUser } from "../_libs/github";
+import Image from "next/image";
 
 export default function ResultSection({
   account,
@@ -43,12 +44,14 @@ export default function ResultSection({
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-6">
               <div className="bg-white rounded-full p-1 shadow-lg">
-                <img
+                <Image
                   src={
-                    account ? account?.avatar_url : "/avatar/github-octocat.png"
+                    account ? account.avatar_url : "/avatar/github-octocat.png"
                   }
                   alt="User Avatar"
-                  className="w-20 h-20 rounded-full"
+                  width={80}
+                  height={80}
+                  className="rounded-full"
                 />
               </div>
               <div>
