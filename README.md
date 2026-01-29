@@ -172,3 +172,10 @@ You are free to modify and extend it for your own needs.
 
 FollowSync is designed to be fast, practical, and focused on real GitHub usage.  
 It eliminates unnecessary manual work and gives users full visibility and control over their follower relationships.
+
+---
+
+## Credits
+
+Created with care by **Khenrab** — developer, builder, and the mind behind FollowSync.  
+This tool was born out of a real pain, and turned into a real product to help other developers save time and keep their GitHub presence balanced and intentional.
