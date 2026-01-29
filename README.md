@@ -1,36 +1,169 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FollowSync  
+**GitHub Follow Checker**
 
-## Getting Started
+FollowSync is a lightweight productivity tool designed to help GitHub users maintain balance between their followers and followings.
 
-First, run the development server:
+Many users attempt to increase their follower count by following large numbers of people and then unfollowing after receiving follow-backs. Identifying these patterns manually on GitHub requires switching between followers and following lists and comparing users one by one, which is inefficient and time-consuming.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+FollowSync automates this process and presents the results clearly, allowing users to take action instantly.
+
+---
+
+## Purpose
+
+The purpose of FollowSync is to:
+
+- Identify users who are not following you back
+- Identify users you are not following back
+- Restore balance between followers and followings
+- Eliminate the need for manual comparison on GitHub
+
+What previously took close to an hour can now be completed in a few seconds.
+
+---
+
+## How It Works
+
+1. Enter your GitHub username
+2. Click the **Analyze** button
+3. The application fetches:
+   - Your followers
+   - Your followings
+4. Results are displayed in two columns:
+   - Users not following you back
+   - Users you are not following back
+5. Follow or unfollow users directly from the interface with a single click
+
+---
+
+## Tech Stack
+
+- **Framework:** Next.js
+- **Language:** JavaScript
+- **API:** GitHub REST API
+- **Styling:** Tailwind CSS
+
+The application is fully client-side and does not require a backend or database.
+
+---
+
+## Scripts
+
+```
+"dev": "next dev --turbopack",
+"build": "next build",
+"start": "next start"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Setup & Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Clone the Repository
 
-## Learn More
+```
+git clone <repository-url>
+cd followsync
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 2. Install Dependencies
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. Generate a GitHub Personal Access Token (PAT)
 
-## Deploy on Vercel
+You need a GitHub PAT to enable follow and unfollow actions.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Go to GitHub → Settings → Developer settings → Personal access tokens
+- Generate a token with the **user** scope
+- This scope allows reading profile data and managing follow relationships
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. Add Environment Variable
+
+Create a `.env.local` file in the project root:
+
+```
+NEXT_PUBLIC_GITHUB_PAT=your_personal_access_token
+```
+
+Restart the development server after adding the environment variable.
+
+---
+
+## Run the App
+
+```
+npm run dev
+```
+
+Open:
+
+```
+http://localhost:3000
+```
+
+---
+
+## Optional: Auto‑Load Logged‑In Account
+
+If you want the app to automatically load your own GitHub account without manually typing the username:
+
+### 1. Uncomment the following `useEffect` blocks in `app/page.js`
+
+```js
+// useEffect(() => {
+//   loadAccountInfo();
+// }, []);
+
+// useEffect(() => {
+//   handleCompare();
+// }, []);
+```
+
+### 2. Replace `username` with `account.login` in these API calls
+
+```js
+fetchAllPages(\`https://api.github.com/users/\${username}/followers\`)
+fetchAllPages(\`https://api.github.com/users/\${username}/following\`)
+```
+
+This will automatically analyze the authenticated user’s account.
+
+---
+
+## Pagination Handling
+
+GitHub limits results to 100 users per request. FollowSync automatically fetches all pages to ensure complete and accurate results, even for users with larger networks.
+
+---
+
+## Rate Limits
+
+GitHub API rate limits apply:
+
+- Authenticated requests allow significantly higher limits
+- If rate limits are exceeded, the app will show an appropriate error message
+
+---
+
+## Security Notes
+
+- Your GitHub token is used only in your local environment
+- The token is never stored in a database or sent to a backend
+- Do not commit `.env.local` to version control
+
+---
+
+## License
+
+This project is provided for personal and educational use.  
+You are free to modify and extend it for your own needs.
+
+---
+
+## Summary
+
+FollowSync is designed to be fast, practical, and focused on real GitHub usage.  
+It eliminates unnecessary manual work and gives users full visibility and control over their follower relationships.

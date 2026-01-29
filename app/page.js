@@ -1,103 +1,103 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useEffect, useState } from "react";
+import Header from "./_components/Header";
+import HeroSection from "./_components/HeroSection";
+import HowItWorksSection from "./_components/HowItWorksSection";
+import CheckerSection from "./_components/CheckerSection";
+import ResultSection from "./_components/ResultSection";
+import { fetchAllPages, fetchUserInfo } from "./_libs/github";
+
+export default function GitHubComparePage() {
+  const [account, setAccount] = useState(null);
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+  const [diff1, setDiff1] = useState([]);
+  const [diff2, setDiff2] = useState([]);
+  const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   loadAccountInfo();
+  // }, []);
+
+  // useEffect(() => {
+  //   handleCompare();
+  // }, []);
+
+  const loadAccountInfo = async () => {
+    const data = await fetchUserInfo();
+
+    setAccount(data);
+  };
+
+  const handleCompare = async (username) => {
+    setError("");
+    setDiff1([]);
+    setDiff2([]);
+
+    // If you want to load all info automatically without inputting username, change "username" to "account.login"
+    try {
+      const [f1, f2] = await Promise.all([
+        fetchAllPages(`https://api.github.com/users/${username}/followers`),
+        fetchAllPages(`https://api.github.com/users/${username}/following`),
+      ]);
+
+      if (f1.message || f2.message) {
+        setError("User not found or rate limited.");
+        return;
+      }
+
+      setFollowers(f1);
+      setFollowing(f2);
+
+      const followersSet = new Set(f1.map((user) => user.login));
+      const followingSet = new Set(f2.map((user) => user.login));
+
+      const onlyFollowing = f2.filter((user) => !followersSet.has(user.login));
+      const onlyFollowers = f1.filter((user) => !followingSet.has(user.login));
+
+      setDiff1(onlyFollowing);
+      setDiff2(onlyFollowers);
+
+      loadAccountInfo();
+    } catch (err) {
+      setAccount(null);
+      setFollowers([]);
+      setFollowing([]);
+
+      if (err.status === 404) {
+        setError("GitHub user not found.");
+      } else {
+        setError("Something went wrong.");
+      }
+    }
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div className="bg-linear-to-br from-slate-50 via-indigo-50 to-purple-50 font-sans">
+      <Header />
+      <HeroSection
+        diff1={diff1}
+        diff2={diff2}
+        followers={followers}
+        following={following}
+      />
+      <HowItWorksSection />
+      <CheckerSection
+        onCompare={handleCompare}
+        error={error}
+        setError={setError}
+      />
+      <ResultSection
+        account={account}
+        followers={followers}
+        following={following}
+        setFollowing={setFollowing}
+        diff1={diff1}
+        setDiff1={setDiff1}
+        diff2={diff2}
+        setDiff2={setDiff2}
+      />
     </div>
   );
 }
