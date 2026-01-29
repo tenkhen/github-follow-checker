@@ -1,7 +1,12 @@
-# FollowSync  
+# FollowSync
+
 **GitHub Follow Checker**
 
 FollowSync is a lightweight productivity tool designed to help GitHub users maintain balance between their followers and followings.
+
+![FollowSync Preview](./public/followsync_cover.png)
+
+---
 
 Many users attempt to increase their follower count by following large numbers of people and then unfollowing after receiving follow-backs. Identifying these patterns manually on GitHub requires switching between followers and following lists and comparing users one by one, which is inefficient and time-consuming.
 
